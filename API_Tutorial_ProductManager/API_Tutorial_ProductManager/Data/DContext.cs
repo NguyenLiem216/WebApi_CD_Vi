@@ -12,6 +12,39 @@ namespace API_Tutorial_ProductManager.Data
         #region DbSet
         public DbSet<Product_data> Product_Datas { get; set; } = null!;
         public DbSet<Products_Type> Product_Types { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<Detailed_Orders> Detailed_Orders {  get; set; } = null!;
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>(e => 
+            {
+                e.ToTable("Order");
+                e.HasKey(od => od.Id_Ord);
+                e.Property(od => od.OrdDate).HasDefaultValueSql("now() AT TIME ZONE 'UTC'");
+                e.Property(od => od.Receiver).IsRequired().HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Detailed_Orders>(entity => {
+                entity.ToTable("Detailed_Orders");
+                entity.HasKey(e => new
+                {
+                    e.Id,
+                    e.Id_Ord
+                });
+                entity.HasOne(e => e.Order)
+                .WithMany(e => e.Detailed_Orders)
+                .HasForeignKey(e => e.Id_Ord)
+                .HasConstraintName("FK_Detail_Orders_Order");
+
+
+                entity.HasOne(e => e.Products)
+                .WithMany(e => e.Detailed_Orders)
+                .HasForeignKey(e => e.Id)
+                .HasConstraintName("FK_Detail_Orders_Product");
+
+            });
+        }
     }
 }

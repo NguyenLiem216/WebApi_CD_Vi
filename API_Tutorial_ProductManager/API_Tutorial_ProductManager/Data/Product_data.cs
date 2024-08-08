@@ -24,5 +24,13 @@ namespace API_Tutorial_ProductManager.Data
 
         [ForeignKey("Id_Type")]
         public Products_Type Products_Type { get; set; }=null!;
+
+        public ICollection<Detailed_Orders> Detailed_Orders { get; set;} = null!;
+
+        public Product_data()
+        {
+            //HashSet or List đều được ( danh sách rỗng )
+            Detailed_Orders = new HashSet<Detailed_Orders>();
+        }
     }
 }
