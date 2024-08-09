@@ -1,4 +1,5 @@
 using API_Tutorial_ProductManager.Data;
+using API_Tutorial_ProductManager.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<DContext>(option =>
 {
     option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//builder.Services.AddScoped<ITypeRepository, TypeRepository>();
+builder.Services.AddScoped<ITypeRepository, TypeRepositoryInMemory>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
