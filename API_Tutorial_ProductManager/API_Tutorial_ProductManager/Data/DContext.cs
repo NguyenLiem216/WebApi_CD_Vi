@@ -43,7 +43,7 @@ namespace API_Tutorial_ProductManager.Data
                 .WithMany(e => e.Detailed_Orders)
                 .HasForeignKey(e => e.Id)
                 .HasConstraintName("FK_Detail_Orders_Product");
-
+                
             });
         }
     }

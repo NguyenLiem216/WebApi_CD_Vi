@@ -1,5 +1,6 @@
 ﻿using API_Tutorial_ProductManager.Data;
 using API_Tutorial_ProductManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -35,6 +36,7 @@ namespace API_Tutorial_ProductManager.Controllers
             return Ok(category_list);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult CreateNew(ModelType modelType)
         {
             try
@@ -45,7 +47,7 @@ namespace API_Tutorial_ProductManager.Controllers
                 };
                 _context.Add(category_lst_post);
                 _context.SaveChanges();
-                return Ok(category_lst_post);
+                return StatusCode(StatusCodes.Status201Created, category_lst_post);
             }
             catch (Exception ex)
             {
@@ -64,6 +66,18 @@ namespace API_Tutorial_ProductManager.Controllers
             category_list.TypeName = modelType.TypeName;
             _context.SaveChanges();
             return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteById(int id)
+        {
+            var category_list = _context.Product_Types.SingleOrDefault(pt => pt.Id_Type == id);
+            if (category_list == null)
+            {               
+                return NotFound();
+            }
+            _context.Remove(category_list);
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status200OK);
         }
     }
 }
