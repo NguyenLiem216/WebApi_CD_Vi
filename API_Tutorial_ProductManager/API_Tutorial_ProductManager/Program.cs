@@ -19,6 +19,7 @@ builder.Services.AddDbContext<DContext>(option =>
 
 //builder.Services.AddScoped<ITypeRepository, TypeRepository>();
 builder.Services.AddScoped<ITypeRepository, TypeRepositoryInMemory>();
+builder.Services.AddScoped<IProductRepository,ProductRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

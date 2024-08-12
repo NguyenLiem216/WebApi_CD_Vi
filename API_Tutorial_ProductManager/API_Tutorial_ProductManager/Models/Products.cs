@@ -12,4 +12,11 @@
         public int Stock { get; set; }
         public string? Img { get; set; }
     }
+    public class ProductsModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public decimal Price { get; set; }
+        public string TypeName { get; set; } = null!;
+    }
 }
