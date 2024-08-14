@@ -10,6 +10,7 @@ namespace API_Tutorial_ProductManager.Data
         }
 
         #region DbSet
+        public DbSet<User> users { get; set; } = null!;
         public DbSet<Product_data> Product_Datas { get; set; } = null!;
         public DbSet<Products_Type> Product_Types { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
@@ -44,6 +45,13 @@ namespace API_Tutorial_ProductManager.Data
                 .HasForeignKey(e => e.Id)
                 .HasConstraintName("FK_Detail_Orders_Product");
                 
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.UserName).IsUnique();
+                entity.Property(e => e.FullName).IsRequired().HasMaxLength(150);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(150);
             });
         }
     }

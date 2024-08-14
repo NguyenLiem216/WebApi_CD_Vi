@@ -1,4 +1,5 @@
 using API_Tutorial_ProductManager.Data;
+using API_Tutorial_ProductManager.Models;
 using API_Tutorial_ProductManager.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<DContext>(option =>
 //builder.Services.AddScoped<ITypeRepository, TypeRepository>();
 builder.Services.AddScoped<ITypeRepository, TypeRepositoryInMemory>();
 builder.Services.AddScoped<IProductRepository,ProductRepository>();
+
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
