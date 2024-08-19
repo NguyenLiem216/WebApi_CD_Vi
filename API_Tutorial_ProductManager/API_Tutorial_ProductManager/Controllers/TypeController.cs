@@ -72,7 +72,7 @@ namespace API_Tutorial_ProductManager.Controllers
         {
             var category_list = _context.Product_Types.SingleOrDefault(pt => pt.Id_Type == id);
             if (category_list == null)
-            {               
+            {
                 return NotFound();
             }
             _context.Remove(category_list);

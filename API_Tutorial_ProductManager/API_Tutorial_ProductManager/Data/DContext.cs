@@ -15,6 +15,7 @@ namespace API_Tutorial_ProductManager.Data
         public DbSet<Products_Type> Product_Types { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Detailed_Orders> Detailed_Orders {  get; set; } = null!;
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
